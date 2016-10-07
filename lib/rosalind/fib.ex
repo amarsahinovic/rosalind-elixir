@@ -34,16 +34,20 @@ defmodule Rosalind.FIB do
   iex> Rosalind.FIB.process(n, k)
   48127306357829
 
+  # Dataset 2
+  iex> n = 29
+  iex> k = 4
+  iex> Rosalind.FIB.process(n, k)
+  170361678269
+
   """
   def process(n, k)do
-    do_process(n, k)
+    do_process(n, k, 0, 0, 1)
   end
 
-  def do_process(0, _), do: 0
-  def do_process(1, _), do: 1
-  def do_process(2, _), do: 1
-  def do_process(n, k) do
-    #IO.puts "#{n} #{k}"
-    do_process(n-1, k) + do_process(n-2, k) * k
+  # Bottom-up approach
+  def do_process(n, _, n, population, _), do: population
+  def do_process(n, k, month, population, next_gen_newborns) do
+    do_process(n, k, month + 1, population + next_gen_newborns, population * k)
   end
 end
